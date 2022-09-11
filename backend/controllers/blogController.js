@@ -24,13 +24,14 @@ export const get_blogs = async (req,res,next) =>{
 export const get_blog = async (req,res,next) =>{
      try{ 
         const blog = await Blog.findById(req.params.id)
-        const comments = await Blog.findById(req.params.id).populate('comments')
-        res.json({blog,comments})
+        res.json(blog)
      }
      catch(err){
      next(createError(500,'server error'))
     }
 }
+
+
 
 export const edit_blog = async (req,res,next) =>{
     try {
@@ -61,7 +62,18 @@ export const post_comment = async (req,res,next) =>{
         res.json({blog})
      }
      catch(err){
-    //  next(createError(500, 'server error'))
-    res.json(err)
+     next(createError(500, 'server error'))
     }
+}
+
+
+export const get_comment = async (req,res,next) =>{
+    try{
+       const comments = await Blog.findById(req.params.id).populate('comments')
+       const blogComments = comments.comments
+       res.json(blogComments)
+    }
+    catch(err){
+    res.json(err)
+   }
 }

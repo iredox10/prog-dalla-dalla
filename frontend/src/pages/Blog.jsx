@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 import {useParams } from 'react-router-dom'
 import styledComponents from 'styled-components'
 import Header from '../components/Header'
@@ -12,31 +13,57 @@ const Container = styledComponents.div`
 
 
 export default function Blog() {
-    const {id} = useParams()
-    const {data,loading,error} = usefetch('http://localhost:8888/blog/get-blog/' + id)
+  const {id} = useParams()
+  const {data,loading,error} = usefetch('http://localhost:8888/blog/get-blog/' + id)
+  const blog = data
+  const [comments, setComments] = useState([])
 
-    const [comment, setComment] = useState('')
+  useEffect(() =>{
+    const fetch = async () =>{
+      const res = await axios.get('http://localhost:8888/blog/get-comment/'+id)
+      setComments(res.data)
+      console.log(res.data);
+    }
+    fetch()
+  },[comments,id])
+  
+  const [comment, setComment] = useState('')
+    const handleSubmit = async () =>{
+      try{
+          const res = await axios.post('http://localhost:8888/blog/comment/'+id,{comment})
+          console.log(res.data)
+      }
+      catch(err){
+          console.log(err);
+      }
+  }
 
-    
 
   return (
     <>
     <Header />
     <Wrapper>
       <Flex>
-        <Text><span>category: </span>{data.category}</Text>
-        <Text><span>likes: </span>{data.likes}</Text>
+        <Text><span>category: </span>{blog.category}</Text>
+        <Text><span>likes: </span>{blog.likes}</Text>
       </Flex>
-    <h1>{data.title}</h1>
-    <p>{data.markdown}</p>
+    <h1>{blog.title}</h1>
+    <p>{blog.markdown}</p>
 
-    <form>
+      
+        
+    <form onSubmit={handleSubmit}>
       <Container>
       <label htmlFor="comment">comment</label>
       <textarea name="comment" id="comment" cols="30" rows="10" onChange={(e => setComment(e.target.value))}></textarea>
       </Container>
       <Button>comment</Button>
     </form>
+
+    <h1>comments</h1>
+      {comments.map(c =>(
+        <p>{c.comment}</p>
+      ))}
 
     </Wrapper>
     </>
