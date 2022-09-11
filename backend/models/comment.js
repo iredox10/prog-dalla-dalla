@@ -5,7 +5,11 @@ const comment = new mongoose.Schema({
         type:String,
         required: true,
     },
-    replies: Array
+    replies: Array,
+    blog: {
+        type: mongoose.Schema.Types.Object,
+        refs: 'blog'
+    }
 },{timestamps: true})
 
 const Comment = mongoose.model('comment', comment)

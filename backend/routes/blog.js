@@ -14,4 +14,6 @@ route.delete('/delete-blog',controller.delete_blog)
 
 route.post('/comment/:id',controller.post_comment)
 
+route.get('/get-comment/:id', controller.get_comment)
+
 export default route

@@ -14,10 +14,10 @@ const blog = new mongoose.Schema({
         type: Number,
     },
     category: String,
-    comments:{
+    comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'comment'
-    }
+    }]
 },{timestamps:true})
 
 const Blog = mongoose.model('blog', blog)
