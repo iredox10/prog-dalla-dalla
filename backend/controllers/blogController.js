@@ -1,5 +1,6 @@
 import createError from '../utils/createError.js'
 import Blog from '../models/blog.js'
+import Comment from '../models/comment.js'
 
 export const add_blog = async (req,res,next) =>{
     try {
@@ -7,6 +8,27 @@ export const add_blog = async (req,res,next) =>{
         res.status(201).json(blog)
     } catch (err) {
         next(createError(500, 'server error'))
+    }
+}
+
+export const get_blogs = async (req,res,next) =>{
+     try{ 
+        const blogs = await Blog.find()
+        res.json(blogs)
+     }
+     catch(err){
+     next(createError(500,'server error'))
+    }
+}
+
+export const get_blog = async (req,res,next) =>{
+     try{ 
+        const blog = await Blog.findById(req.params.id)
+        const comments = await Blog.findById(req.params.id).populate('comments')
+        res.json({blog,comments})
+     }
+     catch(err){
+     next(createError(500,'server error'))
     }
 }
 
@@ -27,5 +49,19 @@ export const delete_blog = async (req,res,next) =>{
         res.status(200).json(`deleted ${blog.id}`)
     } catch (err) {
         next(createError(500, 'server error'))
+    }
+}
+
+export const post_comment = async (req,res,next) =>{
+     try{
+        const comment = await Comment.create(req.body)
+        const blog = await Blog.findById(req.params.id)
+        blog.comments.push(comment)
+        blog.save()
+        res.json({blog})
+     }
+     catch(err){
+    //  next(createError(500, 'server error'))
+    res.json(err)
     }
 }

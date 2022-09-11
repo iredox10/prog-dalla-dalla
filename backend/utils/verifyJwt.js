@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import createError from './createError'
+import createError from './createError.js'
 
 export const verifyUser = async (req,res,next)=>{
     const header = req.headers.token

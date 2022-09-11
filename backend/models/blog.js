@@ -10,21 +10,15 @@ const blog = new mongoose.Schema({
         type: String,
         required: true,
     },
-    like:{
-        type: Boolean,
-        default: false
-    },
     likes:{
         type: Number,
-        default: 0,
-        max: 1
     },
-    categories: Array
+    category: String,
     comments:{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'comment'
     }
-})
+},{timestamps:true})
 
 const Blog = mongoose.model('blog', blog)
 

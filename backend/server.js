@@ -1,10 +1,15 @@
-import express, { urlencoded } from 'express'
+import express from 'express'
 import mongooseConnect from './utils/mongooseConnection.js'
+import route from './routes/blog.js'
+import cors from 'cors'
 const app = express()
 
 
+app.use(cors('*'))
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+
+app.use('/blog', route)
 
 mongooseConnect('mongodb://localhost/prog-dalla-dalla')
 
