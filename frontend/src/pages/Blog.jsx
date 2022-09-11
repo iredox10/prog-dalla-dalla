@@ -22,7 +22,6 @@ export default function Blog() {
     const fetch = async () =>{
       const res = await axios.get('http://localhost:8888/blog/get-comment/'+id)
       setComments(res.data)
-      console.log(res.data);
     }
     fetch()
   },[comments,id])
@@ -37,6 +36,27 @@ export default function Blog() {
           console.log(err);
       }
   }
+
+    const handleLike = async () =>{
+      try{
+          const res = await axios.post('http://localhost:8888/blog/like/'+id)
+          console.log(res.data)
+      }
+      catch(err){
+          console.log(err);
+      }
+  }
+
+    const handleUnlike = async () =>{
+      try{
+          const res = await axios.post('http://localhost:8888/blog/unlike/'+id)
+          console.log(res.data)
+      }
+      catch(err){
+          console.log(err);
+      }
+  }
+
 
 
   return (
@@ -62,8 +82,19 @@ export default function Blog() {
 
     <h1>comments</h1>
       {comments.map(c =>(
+        <div key={c._id}>
         <p>{c.comment}</p>
+        </div>
       ))}
+
+    <form onSubmit={handleLike}>
+      <button>like</button>
+    </form>
+
+    <form onSubmit={handleUnlike}>
+      <button>unlike</button>
+    </form>
+
 
     </Wrapper>
     </>

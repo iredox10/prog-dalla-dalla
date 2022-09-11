@@ -77,3 +77,27 @@ export const get_comment = async (req,res,next) =>{
     res.json(err)
    }
 }
+
+export const like = async (req,res,next) =>{
+     try{
+        const blog = await Blog.findByIdAndUpdate(req.params.id,{
+            $inc:{likes:1}
+        })
+        res.json(blog.likes)
+     }
+     catch(err){
+     res.json(err)
+    }
+}
+
+export const unlike = async (req,res,next) =>{
+     try{
+        const blog = await Blog.findByIdAndUpdate(req.params.id,{
+            $inc:{likes:-1}
+        })
+        res.json(blog.likes)
+     }
+     catch(err){
+     res.json(err)
+    }
+}

@@ -43,7 +43,9 @@ export default function AddBlog() {
                 <textarea name="markdown" id="maekdown" cols="30" rows="10" onChange={(e => setMarkdown(e.target.value))}></textarea>
             </Container>
             <Container>
+                <label htmlFor="category">category </label>
                 <select name="category" id="category" onChange={(e => setCategory(e.target.value))}>
+                    <option selected disabled>zabi category</option>
                     <option value="Html">Html</option>
                     <option value="Css">Css</option>
                     <option value="Javascript">Javascript</option>

@@ -16,4 +16,7 @@ route.post('/comment/:id',controller.post_comment)
 
 route.get('/get-comment/:id', controller.get_comment)
 
+route.post('/like/:id',controller.like)
+route.post('/unlike/:id',controller.unlike)
+
 export default route
