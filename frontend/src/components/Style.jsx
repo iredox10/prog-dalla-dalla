@@ -29,3 +29,8 @@ export const Button = style.button`
         opacity: .7;
     }
 `
+export const Grid = style.div`
+display: grid;
+grid-template-columns: repeat(3,1fr);
+gap: 1rem;
+`

@@ -14,6 +14,9 @@ const blog = new mongoose.Schema({
         type: Number,
     },
     category: String,
+    twitter: String,
+    facebook: String,
+    webLink: String,
     comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'comment'
