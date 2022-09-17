@@ -2,6 +2,9 @@ import express from 'express'
 import mongooseConnect from './utils/mongooseConnection.js'
 import route from './routes/blog.js'
 import cors from 'cors'
+
+import tutRoute from './routes/tutRoute.js'
+
 const app = express()
 
 
@@ -10,6 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
 app.use('/blog', route)
+app.use('/tut',tutRoute)
 
 mongooseConnect('mongodb://localhost/prog-dalla-dalla')
 
